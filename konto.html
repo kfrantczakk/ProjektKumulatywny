@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Konto bankowe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Moje konto bankowe</h1>
+    <p><strong>Saldo:</strong> {{saldo}} zł</p>
+
+    <form method="post" action="index.php">
+        <label>Kwota: <input type="number" name="kwota" step="0.01" required></label><br>
+        <label>
+            <input type="radio" name="typ" value="wplata" checked> Wpłata
+            <input type="radio" name="typ" value="wyplata"> Wypłata
+        </label><br><br>
+        <button type="submit">Wykonaj operację</button>
+    </form>
+
+    <h2>Historia transakcji</h2>
+    <ul>
+        {{historia}}
+    </ul>
+
+    <form method="post" action="index.php?reset=1">
+        <button type="submit" name="reset">Wyloguj i zresetuj konto</button>
+    </form>
+</body>
+</html>
