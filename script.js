@@ -1,5 +1,5 @@
 $(function() {
-  // Obsługa kliknięcia w przycisk kopiowania BLIK
+
   $(document).on('click', '.blik-button', function() {
     const blikCode = $('.fs-3.fw-bold').text();
     navigator.clipboard.writeText(blikCode).then(() => {
@@ -9,7 +9,6 @@ $(function() {
     });
   });
 
-  // Obsługa kliknięcia przycisku "Zobacz więcej"
   $(document).on('click', '#zobacz-wiecej', function() {
     const pozostalaHistoria = $('#historia-pozostala');
     if (pozostalaHistoria.hasClass('d-none')) {

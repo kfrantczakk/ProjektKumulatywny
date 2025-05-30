@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $blik = str_pad(random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
 
-// Template replacement
+
 $html = file_get_contents('konto.html');
 $html = str_replace('{{saldo}}', number_format($_SESSION['saldo'], 2), $html);
 $html = str_replace('{{ostatnia_operacja}}', htmlspecialchars($_SESSION['ostatnia_operacja']), $html);
@@ -69,7 +69,7 @@ foreach ($_SESSION['karty'] as $karta) {
 }
 $html = str_replace('{{karty}}', $kartyHtml, $html);
 
-// Show only last 3 transactions initially
+
 $historia_reversed = array_reverse($_SESSION['historia']);
 $ostatnie_3 = array_slice($historia_reversed, 0, 3);
 $pozostale = array_slice($historia_reversed, 3);
