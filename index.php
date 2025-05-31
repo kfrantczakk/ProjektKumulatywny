@@ -30,7 +30,6 @@ if (isset($_POST['czysc_historia'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $czas = date('Y-m-d H:i:s');
 
-    // Only handle deposits now (wpłata only)
     if (isset($_POST['kwota']) && isset($_POST['typ'])) {
         $kwota = floatval($_POST['kwota']);
         $typ = $_POST['typ'];
