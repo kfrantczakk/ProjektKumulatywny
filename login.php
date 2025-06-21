@@ -1,7 +1,5 @@
 <?php
 session_start();
-session_destroy();
-session_start();
 
 require_once 'classes/User.php';
 
@@ -14,27 +12,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login = $_POST['login'];
     $haslo = $_POST['haslo'];
 
-require_once 'db.php'; // plik z połączeniem PDO (opisany niżej)
+    $user = new User('admin', '1234');
 
-$stmt = $pdo->prepare("SELECT id FROM uzytkownicy WHERE login = ? AND haslo = ?");
-$stmt->execute([$login, $haslo]);
-$user = $stmt->fetch();
+    if ($user->login($login, $haslo)) {
+        $_SESSION['zalogowany'] = true;
+        $_SESSION['saldo'] = $_SESSION['saldo'] ?? 0;
+        $_SESSION['historia'] = $_SESSION['historia'] ?? [];
+        $_SESSION['ostatnia_operacja'] = $_SESSION['ostatnia_operacja'] ?? '';
 
-if ($user) {
-    $_SESSION['zalogowany'] = true;
-    $_SESSION['user_id'] = $user['id']; // << KLUCZOWE!
-    $_SESSION['saldo'] = $_SESSION['saldo'] ?? 0;
-    $_SESSION['historia'] = $_SESSION['historia'] ?? [];
-    $_SESSION['ostatnia_operacja'] = $_SESSION['ostatnia_operacja'] ?? [];
+        setcookie("ostatni_login", $login, time() + 3600);
 
-    setcookie("ostatni_login", $login, time() + 3600);
-
-    header("Location: index.php");
-    exit();
-} else {
-    $blad = "Nieprawidłowy login lub hasło.";
-}
-
+        header("Location: index.php");
+        exit();
+    } else {
+        $blad = "Nieprawidłowy login lub hasło.";
+    }
 }
 
 $html = file_get_contents('login.html');
